@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Bloom - Tabela</title>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h1>CONSULTA DO ESTOQUE</h1>
+
+        <div class="container">
+            <button onclick="listarTodas()">
+                VISUALIZAR TABELA DO ESTOQUE
+            </button>
+
+            <div id="resultadoTodas" class="resultado">...</div>
+        </div>
+
+        <div class="btn-voltar">
+            <button onclick="window.location.href='index.html'">
+                ← voltar para Filtros
+            </button>
+        </div>
+    </div>
+
+<script>
+async function listarTodas() {
+    try {
+        const response = await fetch('http://localhost:3001/cupcakes');
+        const data = await response.json();
+
+        if (!data.sucesso || data.cupcakes.length === 0) {
+            document.getElementById('resultadoTodas').innerHTML =
+                '<span>Nenhum cupcake cadastrado</span>';
+            return;
+        }
+
+        let tabela = `
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Massa</th>
+                    <th>Cobertura</th>
+                    <th>Granulado</th>
+                    <th>Estoque</th>
+                    <th>Preço</th>
+                </tr>
+        `;
+
+        data.cupcakes.forEach(cupcake => {
+            tabela += `
+                <tr>
+                    <td>${cupcake.id_produto}</td>
+                    <td>${cupcake.nome}</td>
+                    <td>${cupcake.massa}</td>
+                    <td>${cupcake.cobertura}</td>
+                    <td>${cupcake.granulado ? "Sim" : "Não"}</td>
+                    <td>${cupcake.quantidade_estoque}</td>
+                    <td>R$ ${cupcake.preco}</td>
+                </tr>
+            `;
+        });
+
+        tabela += `</table>`;
+
+        document.getElementById('resultadoTodas').innerHTML = tabela;
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById('resultadoTodas').innerHTML =
+            '<span class="erro">Erro na comunicação com o servidor</span>';
+    }
+}
+</script>
+
+</body>
+</html>

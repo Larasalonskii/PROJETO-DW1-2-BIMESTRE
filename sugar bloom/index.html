@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Bloom</title>
+</head>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Bloom</title>
+</head>
+
+<body>
+    <header>
+        <h2>Sejam Bem Vindos ao nosso Banco de Dados de Cupcakes</h2>
+        <h3>Onde a Doçura ganha vida</h3>
+    </header>
+
+    <div class="wrapper">
+        <h1>Filtragem de Cupcakes</h1>
+
+        <div class="menu-filtro">
+            <select id="massaSelect">
+                <option value="">Selecione a massa</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Baunilha">Baunilha</option>
+                <option value="Red Velvet">Red Velvet</option>
+                <option value="Cenoura">Cenoura</option>
+                <option value="Limão">Limão</option>
+                <option value="Laranja">Laranja</option>
+                <option value="Coco">Coco</option>
+            </select>
+
+            <select id="coberturaSelect">
+                <option value="">Selecione a cobertura</option>
+                <option value="Brigadeiro">Brigadeiro</option>
+                <option value="Morango">Morango</option>
+                <option value="Cream Cheese">Cream Cheese</option>
+                <option value="Chocolate Branco">Chocolate Branco</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Merengue">Merengue</option>
+                <option value="Nutella">Nutella</option>
+                <option value="Doce de Leite">Doce de Leite</option>
+                <option value="Beijinho">Beijinho</option>
+                <option value="Oreo">Oreo</option>
+                <option value="Prestígio">Prestígio</option>
+                <option value="KitKat">KitKat</option>
+                <option value="Ferrero Rocher">Ferrero Rocher</option>
+                <option value="Ovomaltine">Ovomaltine</option>
+                <option value="Kinder Bueno">Kinder Bueno</option>
+                <option value="Paçoca">Paçoca</option>
+                <option value="Mousse de Maracujá">Mousse de Maracujá</option>
+                <option value="Leite Ninho">Leite Ninho</option>
+                <option value="Churros">Churros</option>
+            </select>
+        </div>
+
+        <label>Granulado:</label>
+
+        <input type="radio" id="sim" name="granulado" value="true">
+        <label for="sim">Sim</label>
+
+        <input type="radio" id="nao" name="granulado" value="false">
+        <label for="nao">Não</label>
+
+        <button onclick="aplicarfiltros()">
+            Filtrar Cupcakes
+        </button>
+    </div>
+
+    <div class="botoes-principais">
+        <button onclick="consultartodos()">
+            Ver todos os Cupcakes em estoque
+        </button>
+
+        <button id="btnVerTabela" onclick="window.location.href='tabela.html'">
+            Ver Tabela de Estoque
+        </button>
+    </div>
+
+    <div id="chat"></div>
+
+</body>
+<script>
+    async function consultartodos() {
+        try {
+            const response = await fetch('http://localhost:3001/cupcakes');
+            const data = await response.json();
+
+            data.cupcakes.forEach(cupcake => {
+                adicionarMensagem(
+                    `${cupcake.nome} - R$${cupcake.preco} - Estoque: ${cupcake.quantidade_estoque}`,
+                    'recebido'
+                );
+            });
+
+        } catch (erro) {
+            console.error(erro);
+            adicionarMensagem('Erro ao buscar cupcakes.', 'recebido');
+        }
+    }
+
+    async function aplicarfiltros() {
+        try {
+            const massa = document.getElementById('massaSelect').value;
+            const cobertura = document.getElementById('coberturaSelect').value;
+            const granulado = document.querySelector('input[name="granulado"]:checked')?.value;
+
+            const response = await fetch('http://localhost:3001/cupcakes');
+            const data = await response.json();
+
+            let cupcakes = data.cupcakes;
+
+            if (massa) cupcakes = cupcakes.filter(c => c.massa === massa);
+            if (cobertura) cupcakes = cupcakes.filter(c => c.cobertura === cobertura);
+
+            if (granulado !== undefined) {
+                cupcakes = cupcakes.filter(c => c.granulado === (granulado === "true"));
+            }
+
+            if (cupcakes.length === 0) {
+                adicionarMensagem("Nenhum cupcake encontrado 😢", "recebido");
+                return;
+            }
+
+            cupcakes.forEach(c => {
+                adicionarMensagem(
+                    `${c.nome} - R$${c.preco} - Estoque: ${c.quantidade_estoque}`,
+                    "recebido"
+                );
+            });
+
+        } catch (erro) {
+            console.error(erro);
+            adicionarMensagem("Erro ao filtrar cupcakes.", "recebido");
+        }
+    }
+</script>
+
+</html>
