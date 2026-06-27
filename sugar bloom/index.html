@@ -1,158 +1,327 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugar Bloom</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugar Bloom</title>
+    <title>Sugar Bloom 🧁</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+
+    <!-- HEADER -->
     <header>
-        <h2>Sejam Bem Vindos ao nosso Banco de Dados de Cupcakes</h2>
-        <h3>Onde a Doçura ganha vida</h3>
+        <span class="header-emoji">🧁</span>
+        <h2>Sugar Bloom</h2>
+        <h3>Onde a doçura ganha vida</h3>
     </header>
 
-    <div class="wrapper">
-        <h1>Filtragem de Cupcakes</h1>
+    <!-- CARRINHO FLUTUANTE -->
+    <button class="carrinho-fab" onclick="abrirCarrinho()">
+        🛍️
+        <span class="carrinho-badge" id="carrinhoContador">0</span>
+    </button>
 
-        <div class="menu-filtro">
-            <select id="massaSelect">
-                <option value="">Selecione a massa</option>
-                <option value="Chocolate">Chocolate</option>
-                <option value="Baunilha">Baunilha</option>
-                <option value="Red Velvet">Red Velvet</option>
-                <option value="Cenoura">Cenoura</option>
-                <option value="Limão">Limão</option>
-                <option value="Laranja">Laranja</option>
-                <option value="Coco">Coco</option>
-            </select>
+    <div class="pagina">
 
-            <select id="coberturaSelect">
-                <option value="">Selecione a cobertura</option>
-                <option value="Brigadeiro">Brigadeiro</option>
-                <option value="Morango">Morango</option>
-                <option value="Cream Cheese">Cream Cheese</option>
-                <option value="Chocolate Branco">Chocolate Branco</option>
-                <option value="Chocolate">Chocolate</option>
-                <option value="Merengue">Merengue</option>
-                <option value="Nutella">Nutella</option>
-                <option value="Doce de Leite">Doce de Leite</option>
-                <option value="Beijinho">Beijinho</option>
-                <option value="Oreo">Oreo</option>
-                <option value="Prestígio">Prestígio</option>
-                <option value="KitKat">KitKat</option>
-                <option value="Ferrero Rocher">Ferrero Rocher</option>
-                <option value="Ovomaltine">Ovomaltine</option>
-                <option value="Kinder Bueno">Kinder Bueno</option>
-                <option value="Paçoca">Paçoca</option>
-                <option value="Mousse de Maracujá">Mousse de Maracujá</option>
-                <option value="Leite Ninho">Leite Ninho</option>
-                <option value="Churros">Churros</option>
-            </select>
+        <!-- FILTROS -->
+        <div class="card">
+            <div class="card-titulo">🔍 Filtrar cupcakes</div>
+
+            <div class="campo" style="margin-bottom: 1rem;">
+                <label>Nome do cupcake</label>
+                <input type="text" id="nomeInput" placeholder="Ex: Brigadeiro, Red Velvet..."
+                    oninput="aplicarFiltros()">
+            </div>
+
+            <div class="filtros-grid">
+                <div class="campo">
+                    <label>Massa</label>
+                    <select id="massaSelect">
+                        <option value="">Todas</option>
+                        <option value="Chocolate">Chocolate</option>
+                        <option value="Baunilha">Baunilha</option>
+                        <option value="Red Velvet">Red Velvet</option>
+                        <option value="Cenoura">Cenoura</option>
+                        <option value="Limão">Limão</option>
+                        <option value="Laranja">Laranja</option>
+                        <option value="Coco">Coco</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>Cobertura</label>
+                    <select id="coberturaSelect">
+                        <option value="">Todas</option>
+                        <option value="Brigadeiro">Brigadeiro</option>
+                        <option value="Morango">Morango</option>
+                        <option value="Cream Cheese">Cream Cheese</option>
+                        <option value="Chocolate Branco">Chocolate Branco</option>
+                        <option value="Chocolate">Chocolate</option>
+                        <option value="Merengue">Merengue</option>
+                        <option value="Nutella">Nutella</option>
+                        <option value="Doce de Leite">Doce de Leite</option>
+                        <option value="Beijinho">Beijinho</option>
+                        <option value="Oreo">Oreo</option>
+                        <option value="Prestígio">Prestígio</option>
+                        <option value="KitKat">KitKat</option>
+                        <option value="Ferrero Rocher">Ferrero Rocher</option>
+                        <option value="Ovomaltine">Ovomaltine</option>
+                        <option value="Kinder Bueno">Kinder Bueno</option>
+                        <option value="Paçoca">Paçoca</option>
+                        <option value="Mousse de Maracujá">Mousse de Maracujá</option>
+                        <option value="Leite Ninho">Leite Ninho</option>
+                        <option value="Churros">Churros</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="granulado-grupo">
+                <span>Granulado</span>
+                <label class="radio-opcao">
+                    <input type="radio" name="granulado" value=""> Todos
+                </label>
+                <label class="radio-opcao">
+                    <input type="radio" name="granulado" value="true"> Sim
+                </label>
+                <label class="radio-opcao">
+                    <input type="radio" name="granulado" value="false"> Não
+                </label>
+            </div>
+
+            <button class="btn-rosa" onclick="aplicarFiltros()">Filtrar cupcakes</button>
         </div>
 
-        <div class="granulado-grupo">
-            <label>Granulado:</label>
-            <label class="radio-opcao">
-                <input type="radio" id="sim" name="granulado" value="true"> Sim
-            </label>
-            <label class="radio-opcao">
-                <input type="radio" id="nao" name="granulado" value="false"> Não
-            </label>
+        <!-- AÇÕES RÁPIDAS -->
+        <div class="botoes-principais">
+            <button onclick="carregarTodos()">🧁 Ver todos os cupcakes</button>
+            <button onclick="window.location.href='tabela.html'">📋 Ver tabela de estoque</button>
         </div>
 
-        <button onclick="aplicarfiltros()">
-            Filtrar Cupcakes
-        </button>
+        <!-- GRADE DE CUPCAKES -->
+        <div id="grade" class="grade-cupcakes"></div>
+
     </div>
 
-    <div class="botoes-principais">
-        <button onclick="consultartodos()">
-            Ver todos os Cupcakes em estoque
-        </button>
-
-        <button id="btnVerTabela" onclick="window.location.href='tabela.html'">
-            Ver Tabela de Estoque
-        </button>
+    <!-- MODAL CARRINHO -->
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharCarrinho()"></div>
+    <div class="modal-carrinho" id="modalCarrinho">
+        <div class="modal-header">
+            <span class="modal-titulo">🛍️ Meu pedido</span>
+            <button class="modal-fechar" onclick="fecharCarrinho()">✕</button>
+        </div>
+        <div id="carrinhoItens" class="carrinho-itens"></div>
+        <div class="carrinho-rodape" id="carrinhoRodape"></div>
     </div>
 
-    <div id="chat"></div>
+    <script>
+        let todosOsCupcakes = [];
+        let carrinho = {};
 
-</body>
-<script>
-    function adicionarMensagem(texto, tipo) {
-        const chat = document.getElementById('chat');
-        const msg = document.createElement('div');
-        msg.className = tipo;
-        msg.textContent = texto;
-        chat.appendChild(msg);
-    }
+        // Emojis por tipo de massa
+        const emojisMassa = {
+            'Chocolate': '🍫',
+            'Baunilha': '🌼',
+            'Red Velvet': '❤️',
+            'Cenoura': '🥕',
+            'Limão': '🍋',
+            'Laranja': '🍊',
+            'Coco': '🥥',
+        };
 
-    async function consultartodos() {
-        document.getElementById('chat').innerHTML = '';
-        try {
-            const response = await fetch('http://localhost:3001/cupcakes');
-            const data = await response.json();
-
-            data.cupcakes.forEach(cupcake => {
-                adicionarMensagem(
-                    `${cupcake.nome} - R$${cupcake.preco} - Estoque: ${cupcake.quantidade_estoque}`,
-                    'recebido'
-                );
-            });
-
-        } catch (erro) {
-            console.error(erro);
-            adicionarMensagem('Erro ao buscar cupcakes.', 'recebido');
+        async function carregarTodos() {
+            try {
+                const response = await fetch('http://localhost:3001/cupcakes');
+                const data = await response.json();
+                todosOsCupcakes = data.cupcakes;
+                renderizarGrade(todosOsCupcakes);
+            } catch (e) {
+                document.getElementById('grade').innerHTML =
+                    '<p style="text-align:center;color:var(--texto-hint)">Erro ao carregar cupcakes 😢</p>';
+            }
         }
-    }
 
-    async function aplicarfiltros() {
-        document.getElementById('chat').innerHTML = '';
-        try {
+        function aplicarFiltros() {
+            const nome = document.getElementById('nomeInput').value.toLowerCase();
             const massa = document.getElementById('massaSelect').value;
             const cobertura = document.getElementById('coberturaSelect').value;
             const granulado = document.querySelector('input[name="granulado"]:checked')?.value;
 
-            const response = await fetch('http://localhost:3001/cupcakes');
-            const data = await response.json();
+            const temNome = nome.length > 0;
 
-            let cupcakes = data.cupcakes;
+            // desativa ou reativa os outros filtros
+            document.getElementById('massaSelect').classList.toggle('desativado', temNome);
+            document.getElementById('coberturaSelect').classList.toggle('desativado', temNome);
+            document.querySelector('.granulado-grupo').classList.toggle('desativado', temNome);
+            document.querySelector('.btn-rosa').classList.toggle('desativado', temNome);
 
-            if (massa) cupcakes = cupcakes.filter(c => c.massa === massa);
-            if (cobertura) cupcakes = cupcakes.filter(c => c.cobertura === cobertura);
-            if (granulado !== undefined) {
-                cupcakes = cupcakes.filter(c => c.granulado === (granulado === "true"));
-            }
+            let lista = todosOsCupcakes;
 
-            if (cupcakes.length === 0) {
-                adicionarMensagem("Nenhum cupcake encontrado 😢", "recebido");
+            if (!lista.length) {
+                carregarTodos().then(() => aplicarFiltros());
                 return;
             }
 
-            cupcakes.forEach(c => {
-                adicionarMensagem(
-                    `${c.nome} - R$${c.preco} - Estoque: ${c.quantidade_estoque}`,
-                    "recebido"
-                );
-            });
+            if (temNome) {
+                lista = lista.filter(c => c.nome.toLowerCase().includes(nome));
+            } else {
+                if (massa) lista = lista.filter(c => c.massa === massa);
+                if (cobertura) lista = lista.filter(c => c.cobertura === cobertura);
+                if (granulado !== '' && granulado !== undefined)
+                    lista = lista.filter(c => c.granulado === (granulado === 'true'));
+            }
 
-        } catch (erro) {
-            console.error(erro);
-            adicionarMensagem("Erro ao filtrar cupcakes.", "recebido");
+            renderizarGrade(lista);
         }
-    }
-</script>
+
+        function renderizarGrade(lista) {
+            const grade = document.getElementById('grade');
+
+            if (!lista.length) {
+                grade.innerHTML = `
+            <div class="grade-vazia">
+                <span>🍰</span>
+                <p>Nenhum cupcake encontrado com esses filtros</p>
+            </div>`;
+                return;
+            }
+
+            grade.innerHTML = lista.map(c => {
+                const qtd = carrinho[c.id_produto]?.qtd || 0;
+                return `
+        <div class="cupcake-card" id="card-${c.id_produto}">
+            <div class="cupcake-img-wrapper">
+                <img src="${c.imagem}" alt="${c.nome}" class="cupcake-img"
+                    onerror="this.style.display='none'">
+            </div>
+            <div class="cupcake-info">
+                <div class="cupcake-nome">${c.nome}</div>
+                <div class="cupcake-detalhes">${c.massa} · ${c.cobertura}</div>
+                <div class="cupcake-sub">
+                    ${c.granulado ? '✨ Com granulado' : ''}
+                    <span class="cupcake-estoque">Estoque: ${c.quantidade_estoque}</span>
+                </div>
+            </div>
+            <div class="cupcake-rodape">
+                <span class="cupcake-preco">R$ ${parseFloat(c.preco).toFixed(2)}</span>
+                <div class="qty-controle" id="qty-${c.id_produto}">
+                    ${qtd > 0 ? `
+                    <button class="qty-btn" onclick="remover(${c.id_produto})">−</button>
+                    <span class="qty-num">${qtd}</span>
+                    <button class="qty-btn" onclick="adicionar(${c.id_produto})">+</button>
+                    ` : `
+                    <button class="btn-add" onclick="adicionar(${c.id_produto})">+ Adicionar</button>
+                    `}
+                </div>
+            </div>
+        </div>`;
+            }).join('');
+        }
+
+        function adicionar(id) {
+            const cupcake = todosOsCupcakes.find(c => c.id_produto === id);
+            if (!cupcake) return;
+
+            if (!carrinho[id]) carrinho[id] = { cupcake, qtd: 0 };
+            carrinho[id].qtd++;
+
+            atualizarContador();
+            atualizarQtyCard(id);
+            animarFab();
+        }
+
+        function remover(id) {
+            if (!carrinho[id]) return;
+            carrinho[id].qtd--;
+            if (carrinho[id].qtd <= 0) delete carrinho[id];
+
+            atualizarContador();
+            atualizarQtyCard(id);
+        }
+
+        function atualizarQtyCard(id) {
+            const el = document.getElementById(`qty-${id}`);
+            if (!el) return;
+            const qtd = carrinho[id]?.qtd || 0;
+
+            el.innerHTML = qtd > 0 ? `
+            <button class="qty-btn" onclick="remover(${id})">−</button>
+            <span class="qty-num">${qtd}</span>
+            <button class="qty-btn" onclick="adicionar(${id})">+</button>
+        ` : `<button class="btn-add" onclick="adicionar(${id})">+ Adicionar</button>`;
+        }
+
+        function atualizarContador() {
+            const total = Object.values(carrinho).reduce((s, v) => s + v.qtd, 0);
+            document.getElementById('carrinhoContador').textContent = total;
+            document.getElementById('carrinhoContador').style.display = total > 0 ? 'flex' : 'none';
+        }
+
+        function animarFab() {
+            const fab = document.querySelector('.carrinho-fab');
+            fab.classList.remove('fab-ping');
+            void fab.offsetWidth;
+            fab.classList.add('fab-ping');
+        }
+
+        function abrirCarrinho() {
+            const itens = Object.values(carrinho);
+            const el = document.getElementById('carrinhoItens');
+            const rodape = document.getElementById('carrinhoRodape');
+
+            if (!itens.length) {
+                el.innerHTML = `
+                <div class="carrinho-vazio">
+                    <span>🛍️</span>
+                    <p>Seu carrinho está vazio</p>
+                </div>`;
+                rodape.innerHTML = '';
+            } else {
+                let total = 0;
+                el.innerHTML = itens.map(({ cupcake, qtd }) => {
+                    const sub = parseFloat(cupcake.preco) * qtd;
+                    total += sub;
+                    return `
+                <div class="carrinho-item">
+                    <span class="ci-emoji">${emojisMassa[cupcake.massa] || '🧁'}</span>
+                    <div class="ci-info">
+                        <div class="ci-nome">${cupcake.nome}</div>
+                        <div class="ci-sub">R$ ${parseFloat(cupcake.preco).toFixed(2)} × ${qtd}</div>
+                    </div>
+                    <span class="ci-total">R$ ${sub.toFixed(2)}</span>
+                </div>`;
+                }).join('');
+
+                rodape.innerHTML = `
+                <div class="carrinho-total">
+                    <span>Total</span>
+                    <span>R$ ${total.toFixed(2)}</span>
+                </div>
+                <button class="btn-rosa" onclick="finalizarPedido()">Finalizar pedido 🎉</button>`;
+            }
+
+            document.getElementById('modalOverlay').classList.add('ativo');
+            document.getElementById('modalCarrinho').classList.add('ativo');
+        }
+
+        function fecharCarrinho() {
+            document.getElementById('modalOverlay').classList.remove('ativo');
+            document.getElementById('modalCarrinho').classList.remove('ativo');
+        }
+
+        function finalizarPedido() {
+            carrinho = {};
+            atualizarContador();
+            fecharCarrinho();
+            renderizarGrade(todosOsCupcakes);
+            alert('Pedido realizado com sucesso! 🎉🧁');
+        }
+
+    </script>
+</body>
 
 </html>

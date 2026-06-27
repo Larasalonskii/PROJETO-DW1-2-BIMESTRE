@@ -1,5 +1,4 @@
-cat > /mnt/user-data/outputs/style.css << 'EOF'
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -8,369 +7,784 @@ cat > /mnt/user-data/outputs/style.css << 'EOF'
 }
 
 :root {
-    --rosa: #f4a7c3;
-    --rosa-escuro: #d4547e;
-    --rosa-claro: #fbeaf0;
-    --lilas: #c9b8f0;
-    --menta: #b8e8d0;
-    --amarelo: #fde9a2;
-    --pêssego: #ffd5b8;
-    --branco: #fffaf8;
-    --texto: #5a3a4a;
+    --rosa:        #f4a7c3;
+    --rosa-medio:  #e8799f;
+    --rosa-escuro: #c9536f;
+    --rosa-claro:  #fdf0f5;
+    --rosa-borda:  #f7cfe0;
+    --branco:      #fffcfd;
+    --texto:       #4a2d3a;
     --texto-suave: #9a7088;
+    --texto-hint:  #c4a0b4;
 }
 
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: var(--branco);
-    background-image:
-        radial-gradient(circle at 10% 20%, #fbeaf0 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, #e8f0fb 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, #f0fbe8 0%, transparent 60%);
+    background: var(--branco);
+    background-image: radial-gradient(ellipse at 50% 0%, #fbeaf0 0%, transparent 60%);
     background-attachment: fixed;
     color: var(--texto);
     min-height: 100vh;
 }
 
+/* ── HEADER ─────────────────────────────── */
+
 header {
-    background: linear-gradient(135deg, #f4a7c3 0%, #c9b8f0 50%, #a9d4f0 100%);
+    background-image: url("fundov2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-bottom: 1.5px solid var(--rosa-borda);
     text-align: center;
-    padding: 3rem 2rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(212, 84, 126, 0.2);
+    padding: 3.5rem 2rem 3rem;
 }
 
-header::before {
-    content: '🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰';
-    position: absolute;
-    top: 8px;
-    left: 0;
-    width: 100%;
-    font-size: 1.2rem;
-    opacity: 0.4;
-    letter-spacing: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-header::after {
-    content: '🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰 🧁 🍰';
-    position: absolute;
-    bottom: 8px;
-    left: 0;
-    width: 100%;
-    font-size: 1.2rem;
-    opacity: 0.4;
-    letter-spacing: 4px;
-    white-space: nowrap;
-    overflow: hidden;
+.header-emoji {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+    line-height: 1;
 }
 
 header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    color: white;
-    text-shadow: 0 2px 8px rgba(180, 60, 100, 0.3);
-    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--rosa-escuro);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.5px;
 }
 
 header h3 {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 2px;
+    color: var(--texto-hint);
+    letter-spacing: 3px;
     text-transform: uppercase;
 }
 
-.wrapper {
-    max-width: 750px;
-    margin: 2.5rem auto;
-    background: white;
-    border-radius: 24px;
-    padding: 2.5rem;
-    box-shadow: 0 8px 40px rgba(212, 84, 126, 0.12);
-    border: 2px solid #fbeaf0;
-}
+/* ── LAYOUT PRINCIPAL ───────────────────── */
 
-.wrapper h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: var(--rosa-escuro);
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.wrapper h1::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--rosa), var(--lilas));
-    margin: 0.5rem auto 0;
-    border-radius: 2px;
-}
-
-.menu-filtro {
+.pagina {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.menu-filtro select {
+/* ── CARD GENÉRICO ──────────────────────── */
+
+.card {
+    background: white;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.card-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--rosa-escuro);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-titulo::after {
+    content: '';
     flex: 1;
-    min-width: 200px;
-    padding: 0.75rem 1rem;
-    border: 2px solid var(--rosa-claro);
-    border-radius: 50px;
+    height: 1px;
+    background: var(--rosa-borda);
+    margin-left: 0.5rem;
+}
+
+/* ── SELECTS ────────────────────────────── */
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.campo label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--texto-hint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.campo select {
+    width: 100%;
+    padding: 0.7rem 2.5rem 0.7rem 1rem;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 12px;
     font-family: 'Nunito', sans-serif;
     font-size: 0.95rem;
     color: var(--texto);
-    background: white;
+    background: var(--rosa-claro);
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4547e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9536f' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
-    padding-right: 2.5rem;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.menu-filtro select:focus {
+.campo select:focus {
     outline: none;
     border-color: var(--rosa);
-    box-shadow: 0 0 0 3px rgba(244, 167, 195, 0.3);
+    box-shadow: 0 0 0 3px rgba(244, 167, 195, 0.25);
+    background-color: white;
 }
 
-label {
-    font-weight: 700;
-    color: var(--texto-suave);
-    font-size: 0.95rem;
-}
+/* ── GRANULADO ──────────────────────────── */
 
 .granulado-grupo {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin: 1rem 0 1.5rem;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
+}
+
+.granulado-grupo > span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--texto-hint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .radio-opcao {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--texto);
 }
 
 input[type="radio"] {
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--rosa);
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--rosa-borda);
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s;
-    position: relative;
+    background: var(--rosa-claro);
 }
 
 input[type="radio"]:checked {
-    background: var(--rosa);
+    background: var(--rosa-escuro);
     border-color: var(--rosa-escuro);
-    box-shadow: inset 0 0 0 4px white;
+    box-shadow: inset 0 0 0 3px white;
 }
 
-button {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 50px;
-    padding: 0.75rem 2rem;
-    transition: all 0.25s ease;
-    letter-spacing: 0.5px;
-}
+/* ── BOTÕES ─────────────────────────────── */
 
-.wrapper > button,
-.wrapper button:last-of-type {
+.btn-rosa {
     display: block;
     width: 100%;
-    background: linear-gradient(135deg, var(--rosa) 0%, var(--rosa-escuro) 100%);
+    padding: 0.85rem 2rem;
+    background: var(--rosa-escuro);
     color: white;
-    margin-top: 1.5rem;
-    font-size: 1.05rem;
-    box-shadow: 0 4px 15px rgba(212, 84, 126, 0.35);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.wrapper > button:hover,
-.wrapper button:last-of-type:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 84, 126, 0.45);
+.btn-rosa:hover {
+    background: var(--rosa-medio);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(201, 83, 111, 0.3);
 }
 
-.wrapper > button:active,
-.wrapper button:last-of-type:active {
+.btn-rosa:active {
     transform: translateY(0);
+    box-shadow: none;
 }
+
+.btn-fantasma {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.75rem;
+    background: transparent;
+    color: var(--rosa-escuro);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-fantasma:hover {
+    background: var(--rosa-claro);
+    border-color: var(--rosa);
+    transform: translateY(-1px);
+}
+
+/* ── BOTÕES PRINCIPAIS ──────────────────── */
 
 .botoes-principais {
-    max-width: 750px;
-    margin: 1.5rem auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    flex-wrap: wrap;
-    padding: 0 1rem;
 }
 
 .botoes-principais button {
-    flex: 1;
-    min-width: 200px;
     padding: 1rem 1.5rem;
-    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    color: var(--rosa-escuro);
+    text-align: center;
+    line-height: 1.4;
 }
 
-.botoes-principais button:first-child {
-    background: linear-gradient(135deg, var(--menta) 0%, #7dcfaa 100%);
-    color: #1a5e40;
-    box-shadow: 0 4px 15px rgba(29, 158, 117, 0.2);
-}
-
-.botoes-principais button:first-child:hover {
+.botoes-principais button:hover {
+    background: var(--rosa-claro);
+    border-color: var(--rosa);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(29, 158, 117, 0.3);
+    box-shadow: 0 6px 20px rgba(201, 83, 111, 0.15);
 }
 
-.botoes-principais button:last-child {
-    background: linear-gradient(135deg, var(--lilas) 0%, #a088d8 100%);
-    color: #3c2a6e;
-    box-shadow: 0 4px 15px rgba(160, 136, 216, 0.3);
+.botoes-principais button:active {
+    transform: translateY(0);
 }
 
-.botoes-principais button:last-child:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(160, 136, 216, 0.4);
-}
+/* ── RESULTADOS / CHAT ──────────────────── */
 
 #chat {
-    max-width: 750px;
-    margin: 1rem auto 3rem;
-    padding: 0 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.5rem;
 }
 
 .recebido {
     background: white;
-    border: 2px solid var(--rosa-claro);
-    border-left: 5px solid var(--rosa);
-    border-radius: 0 16px 16px 0;
+    border: 1.5px solid var(--rosa-borda);
+    border-left: 4px solid var(--rosa);
+    border-radius: 0 12px 12px 0;
     padding: 0.75rem 1.25rem;
-    font-size: 0.97rem;
+    font-size: 0.93rem;
     color: var(--texto);
-    animation: slideIn 0.25s ease;
-    box-shadow: 0 2px 8px rgba(212, 84, 126, 0.08);
+    animation: fadeSlide 0.2s ease;
 }
 
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== TABELA ===== */
+/* ── TABELA ─────────────────────────────── */
 
 .container {
-    margin-top: 1.5rem;
-}
-
-.container > button {
-    display: block;
-    width: 100%;
-    background: linear-gradient(135deg, var(--rosa) 0%, var(--rosa-escuro) 100%);
-    color: white;
-    font-size: 1.05rem;
-    box-shadow: 0 4px 15px rgba(212, 84, 126, 0.35);
     margin-bottom: 1.5rem;
 }
 
-.container > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 84, 126, 0.45);
-}
-
 .resultado {
-    color: var(--texto-suave);
+    color: var(--texto-hint);
     font-size: 0.95rem;
     text-align: center;
-    padding: 1rem;
+    padding: 2rem 1rem;
+}
+
+.tabela-wrapper {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1.5px solid var(--rosa-borda);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(212, 84, 126, 0.1);
+    font-size: 0.88rem;
 }
 
-table tr:first-child th:first-child { border-radius: 16px 0 0 0; }
-table tr:first-child th:last-child  { border-radius: 0 16px 0 0; }
-
 th {
-    background: linear-gradient(135deg, var(--rosa) 0%, var(--rosa-escuro) 100%);
-    color: white;
-    padding: 0.9rem 1rem;
+    background: var(--rosa-claro);
+    color: var(--rosa-escuro);
+    padding: 0.85rem 1rem;
     text-align: left;
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    border-bottom: 1.5px solid var(--rosa-borda);
+    white-space: nowrap;
 }
 
 td {
     padding: 0.8rem 1rem;
-    border-bottom: 1px solid var(--rosa-claro);
+    border-bottom: 1px solid #fdf0f5;
     color: var(--texto);
+    white-space: nowrap;
 }
 
-tr:nth-child(even) td {
-    background: #fff8fb;
+tr:last-child td {
+    border-bottom: none;
 }
 
 tr:hover td {
     background: var(--rosa-claro);
-    transition: background 0.15s;
 }
 
-tr:last-child td { border-bottom: none; }
-tr:last-child td:first-child { border-radius: 0 0 0 16px; }
-tr:last-child td:last-child  { border-radius: 0 0 16px 0; }
+/* ── VOLTAR ─────────────────────────────── */
 
 .btn-voltar {
-    margin-top: 2rem;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* ── RESPONSIVO ─────────────────────────── */
+
+@media (max-width: 580px) {
+    header h2      { font-size: 1.6rem; }
+    .filtros-grid  { grid-template-columns: 1fr; }
+    .botoes-principais { grid-template-columns: 1fr; }
+    .card          { padding: 1.5rem; }
+    th, td         { padding: 0.65rem 0.75rem; }
+}
+
+/* ── CARRINHO FAB ───────────────────────── */
+
+.carrinho-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--rosa-escuro);
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(201, 83, 111, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 100;
+}
+
+.carrinho-fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(201, 83, 111, 0.5);
+}
+
+.fab-ping {
+    animation: ping 0.35s ease;
+}
+
+@keyframes ping {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.carrinho-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--texto);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 800;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ── GRADE DE CUPCAKES ──────────────────── */
+
+.grade-cupcakes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1rem;
+}
+
+.grade-vazia {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--texto-hint);
+}
+
+.grade-vazia span { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
+
+/* ── CARD DE CUPCAKE ────────────────────── */
+
+.cupcake-card {
+    background: white;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 20px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cupcake-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(201, 83, 111, 0.12);
+}
+
+.cupcake-emoji {
+    font-size: 2.6rem;
+    text-align: center;
+    line-height: 1;
+    padding: 0.5rem 0;
+}
+
+.cupcake-nome {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--texto);
+    line-height: 1.3;
+}
+
+.cupcake-detalhes {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+}
+
+.cupcake-sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--texto-hint);
+}
+
+.cupcake-estoque { font-weight: 700; }
+
+.cupcake-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rosa-borda);
+}
+
+.cupcake-preco {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--rosa-escuro);
+}
+
+/* ── CONTROLE DE QUANTIDADE ─────────────── */
+
+.btn-add {
+    background: var(--rosa-escuro);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background: var(--rosa-medio);
+    transform: scale(1.04);
+}
+
+.qty-controle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rosa-borda);
+    background: white;
+    color: var(--rosa-escuro);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    line-height: 1;
+}
+
+.qty-btn:hover { background: var(--rosa-claro); }
+
+.qty-num {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--texto);
+    min-width: 1.2rem;
     text-align: center;
 }
 
-.btn-voltar button {
-    background: transparent;
-    border: 2px solid var(--rosa);
+/* ── MODAL CARRINHO ─────────────────────── */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(74, 45, 58, 0.35);
+    backdrop-filter: blur(3px);
+    z-index: 200;
+}
+
+.modal-overlay.ativo { display: block; }
+
+.modal-carrinho {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 100%;
+    max-width: 400px;
+    height: 100dvh;
+    background: white;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    box-shadow: -8px 0 40px rgba(74, 45, 58, 0.15);
+}
+
+.modal-carrinho.ativo { right: 0; }
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1.5px solid var(--rosa-borda);
+}
+
+.modal-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
     color: var(--rosa-escuro);
-    padding: 0.7rem 2rem;
-    font-size: 0.95rem;
 }
 
-.btn-voltar button:hover {
+.modal-fechar {
     background: var(--rosa-claro);
-    transform: translateY(-2px);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--texto-suave);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
 }
 
-@media (max-width: 600px) {
-    header h2 { font-size: 1.4rem; }
-    .wrapper { margin: 1rem; padding: 1.5rem; }
-    .menu-filtro { flex-direction: column; }
-    .botoes-principais { flex-direction: column; }
-    th, td { padding: 0.6rem 0.7rem; font-size: 0.82rem; }
+.modal-fechar:hover { background: var(--rosa-borda); }
+
+.carrinho-itens {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--texto-hint);
+}
+
+.carrinho-vazio span { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
+
+.carrinho-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 14px;
+    background: var(--rosa-claro);
+}
+
+.ci-emoji { font-size: 1.75rem; flex-shrink: 0; }
+
+.ci-info { flex: 1; }
+
+.ci-nome {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--texto);
+}
+
+.ci-sub {
+    font-size: 0.78rem;
+    color: var(--texto-hint);
+    margin-top: 0.1rem;
+}
+
+.ci-total {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--rosa-escuro);
+    white-space: nowrap;
+}
+
+.carrinho-rodape {
+    padding: 1.25rem 1.5rem;
+    border-top: 1.5px solid var(--rosa-borda);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.carrinho-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--texto);
+}
+
+/* ── RESPONSIVO EXTRA ───────────────────── */
+
+@media (max-width: 580px) {
+    .grade-cupcakes { grid-template-columns: 1fr 1fr; }
+    .modal-carrinho { max-width: 100%; }
+    .carrinho-fab   { bottom: 1.25rem; right: 1.25rem; }
+}
+
+/* ── BADGES TABELA ──────────────────────── */
+
+.id-badge {
+    background: var(--rosa-claro);
+    color: var(--rosa-escuro);
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+}
+
+.badge-sim {
+    background: #e8f5ee;
+    color: #2d7a50;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+}
+
+.badge-nao {
+    background: var(--rosa-claro);
+    color: var(--texto-hint);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+}
+
+.erro {
+    color: var(--rosa-escuro);
+    font-weight: 600;
+}
+
+.campo input[type="text"] {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1.5px solid var(--rosa-borda);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    color: var(--texto);
+    background: var(--rosa-claro);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo input[type="text"]:focus {
+    outline: none;
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px rgba(244, 167, 195, 0.25);
+    background: white;
+}
+
+.campo input[type="text"]::placeholder {
+    color: var(--texto-hint);
+}
+
+.campo select.desativado,
+input[type="radio"].desativado {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.granulado-grupo.desativado {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.btn-rosa.desativado {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.cupcake-img-wrapper {
+    width: 100%;
+    height: 160px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--rosa-claro);
+    margin-bottom: 0.5rem;
+}
+
+.cupcake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cupcake-card:hover .cupcake-img {
+    transform: scale(1.05);
 }

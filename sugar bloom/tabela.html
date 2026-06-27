@@ -1,80 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugar Bloom - Tabela</title>
+    <title>Sugar Bloom - Estoque</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    <div class="wrapper">
-        <h1>CONSULTA DO ESTOQUE</h1>
+    <header>
+        <span class="header-emoji">📋</span>
+        <h2>Tabela de Estoque</h2>
+        <h3>Sugar Bloom · Todos os produtos</h3>
+    </header>
 
-        <div class="container">
-            <button onclick="listarTodas()">
-                VISUALIZAR TABELA DO ESTOQUE
-            </button>
+    <div class="pagina">
 
-            <div id="resultadoTodas" class="resultado">...</div>
+        <div class="card">
+            <div class="card-titulo">📦 Estoque completo</div>
+
+            <div class="container">
+                <button class="btn-rosa" onclick="listarTodas()">Visualizar tabela de estoque</button>
+                <div id="resultadoTodas" class="resultado">Clique no botão para carregar o estoque 🧁</div>
+            </div>
         </div>
 
         <div class="btn-voltar">
-            <button onclick="window.location.href='index.html'">
-                ← voltar para Filtros
-            </button>
+            <button class="btn-fantasma" onclick="window.location.href='index.html'">← Voltar para filtros</button>
         </div>
+
     </div>
 
 <script>
 async function listarTodas() {
+    const resultado = document.getElementById('resultadoTodas');
+    resultado.innerHTML = '<p style="text-align:center;color:var(--texto-hint);padding:2rem">Carregando... 🧁</p>';
+
     try {
         const response = await fetch('http://localhost:3001/cupcakes');
         const data = await response.json();
 
         if (!data.sucesso || data.cupcakes.length === 0) {
-            document.getElementById('resultadoTodas').innerHTML =
-                '<span>Nenhum cupcake cadastrado</span>';
+            resultado.innerHTML = '<span>Nenhum cupcake cadastrado</span>';
             return;
         }
 
         let tabela = `
-            <table border="1">
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Massa</th>
-                    <th>Cobertura</th>
-                    <th>Granulado</th>
-                    <th>Estoque</th>
-                    <th>Preço</th>
-                </tr>
+            <div class="tabela-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Massa</th>
+                        <th>Cobertura</th>
+                        <th>Granulado</th>
+                        <th>Estoque</th>
+                        <th>Preço</th>
+                        <th>foto</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
 
         data.cupcakes.forEach(cupcake => {
             tabela += `
                 <tr>
-                    <td>${cupcake.id_produto}</td>
-                    <td>${cupcake.nome}</td>
+                    <td><span class="id-badge">#${cupcake.id_produto}</span></td>
+                    <td><strong>${cupcake.nome}</strong></td>
                     <td>${cupcake.massa}</td>
                     <td>${cupcake.cobertura}</td>
-                    <td>${cupcake.granulado ? "Sim" : "Não"}</td>
-                    <td>${cupcake.quantidade_estoque}</td>
-                    <td>R$ ${cupcake.preco}</td>
+                    <td>${cupcake.granulado
+                        ? '<span class="badge-sim">Sim</span>'
+                        : '<span class="badge-nao">Não</span>'}</td>
+                    <td>${cupcake.quantidade_estoque} un.</td>
+                    <td><strong>R$ ${parseFloat(cupcake.preco).toFixed(2)}</strong></td>
+                    <td><img src="http://localhost:3001/fotos/${cupcake.imagem}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;"></td>
                 </tr>
             `;
         });
 
-        tabela += `</table>`;
-
-        document.getElementById('resultadoTodas').innerHTML = tabela;
+        tabela += `</tbody></table></div>`;
+        resultado.innerHTML = tabela;
 
     } catch (error) {
         console.error(error);
-        document.getElementById('resultadoTodas').innerHTML =
-            '<span class="erro">Erro na comunicação com o servidor</span>';
+        resultado.innerHTML = '<span class="erro">Erro na comunicação com o servidor 😢</span>';
     }
 }
 </script>
