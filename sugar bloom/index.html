@@ -214,7 +214,7 @@
                 return `
         <div class="cupcake-card" id="card-${c.id_produto}" onclick="window.location.href='detalhes.html?id=${c.id_produto}'">
             <div class="cupcake-img-wrapper">
-                <img src="http://localhost:3001/fotos/${c.imagem}" alt="${c.nome}" class="cupcake-img"> alt="${c.nome}" class="cupcake-img"
+                <img src="http://localhost:3001/fotos/${c.imagem}" alt="${c.nome}" class="cupcake-img" onerror="this.style.display='none'">
                     onerror="this.style.display='none'">
             </div>
             <div class="cupcake-info">
@@ -241,7 +241,7 @@
             }).join('');
         }
 
-        function adicionar(id, event) {
+        function adicionar(id) {
             event.stopPropagation();
             const cupcake = todosOsCupcakes.find(c => c.id_produto === id);
             if (!cupcake) return;
@@ -254,7 +254,7 @@
             animarFab();
         }
 
-        function remover(id,event) {
+        function remover(id) {
             event.stopPropagation();
             if (!carrinho[id]) return;
             carrinho[id].qtd--;
