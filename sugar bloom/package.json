@@ -6,7 +6,7 @@
   },
   "name": "sugar-bloom",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site de cupcakes artesanais com catálogo, filtros, carrinho e controle de estoque.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
