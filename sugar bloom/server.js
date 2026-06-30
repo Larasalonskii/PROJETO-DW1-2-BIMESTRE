@@ -6,6 +6,7 @@ require('dotenv').config();
 
 console.log('DB_NAME:', process.env.DB_NAME);
 console.log('DB_HOST:', process.env.DB_HOST);
+console.log('__dirname:', __dirname);
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
 
 // IMAGENS
 app.get('/fotos/:arquivo', (req, res) => {
-    const caminho = path.join(__dirname, req.params.arquivo);
+    const caminho = path.join(__dirname, 'imagens', req.params.arquivo);
     console.log('Servindo imagem:', caminho);
     if (fs.existsSync(caminho)) {
         res.sendFile(caminho);
@@ -52,19 +53,22 @@ app.get('/fotos/:arquivo', (req, res) => {
 
 // 🍰 ROTA 1 — LISTAR TODOS OS CUPCAKES
 app.get('/cupcakes', async (req, res) => {
+    console.log("Entrou na rota /cupcakes");
     try {
         const result = await pool.query(`
-            SELECT 
-                id_produto,
-                nome,
-                preco,
-                massa,
-                cobertura,
-                granulado,
-                quantidade_estoque,
-                imagem
-            FROM cupcakes
-            ORDER BY id_produto
+            SELECT
+                c.id_produto,
+                c.nome,
+                c.preco,
+                c.massa,
+                c.cobertura,
+                c.granulado,
+                e.quantidade_estoque,
+                c.imagem
+            FROM cupcakes c
+            JOIN estoque e
+            ON c.id_produto = e.id_produto
+            ORDER BY c.id_produto
         `);
 
         res.json({
@@ -74,13 +78,15 @@ app.get('/cupcakes', async (req, res) => {
         });
 
     } catch (err) {
-        console.error('ERRO DETALHADO:', err.message);
+        console.error(err);
         res.status(500).json({
             sucesso: false,
-            mensagem: 'Erro interno no servidor'
+            mensagem: err.message
         });
     }
-});
+}); 
+    
+
 
 // 🍰 ROTA 2 — FILTRAR CUPCAKES
 app.get('/cupcakes/filtrar', async (req, res) => {
@@ -88,16 +94,18 @@ app.get('/cupcakes/filtrar', async (req, res) => {
         const { massa, cobertura, granulado } = req.query;
 
         let query = `
-            SELECT 
-                id_produto,
-                nome,
-                preco,
-                massa,
-                cobertura,
-                granulado,
-                quantidade_estoque,
-                imagem
-            FROM cupcakes
+            SELECT
+                c.id_produto,
+                c.nome,
+                c.preco,
+                c.massa,
+                c.cobertura,
+                c.granulado,
+                e.quantidade_estoque,
+                c.imagem
+            FROM cupcakes c
+            JOIN estoque e
+                ON c.id_produto = e.id_produto
             WHERE 1=1
         `;
 
@@ -105,18 +113,20 @@ app.get('/cupcakes/filtrar', async (req, res) => {
 
         if (massa) {
             params.push(massa);
-            query += ` AND massa = $${params.length}`;
-        }
-        if (cobertura) {
-            params.push(cobertura);
-            query += ` AND cobertura = $${params.length}`;
-        }
-        if (granulado !== undefined && granulado !== '') {
-            params.push(granulado === 'true');
-            query += ` AND granulado = $${params.length}`;
+            query += ` AND c.massa = $${params.length}`;
         }
 
-        query += ` ORDER BY id_produto`;
+        if (cobertura) {
+            params.push(cobertura);
+            query += ` AND c.cobertura = $${params.length}`;
+        }
+
+        if (granulado !== undefined && granulado !== '') {
+            params.push(granulado === 'true');
+            query += ` AND c.granulado = $${params.length}`;
+        }
+
+        query += ` ORDER BY c.id_produto`;
 
         const result = await pool.query(query, params);
 
@@ -141,17 +151,19 @@ app.get('/cupcakes/:id', async (req, res) => {
         const { id } = req.params;
 
         const result = await pool.query(`
-            SELECT 
-                id_produto,
-                nome,
-                preco,
-                massa,
-                cobertura,
-                granulado,
-                quantidade_estoque,
-                imagem
-            FROM cupcakes
-            WHERE id_produto = $1
+            SELECT
+    c.id_produto,
+    c.nome,
+    c.preco,
+    c.massa,
+    c.cobertura,
+    c.granulado,
+    e.quantidade_estoque,
+    c.imagem
+FROM cupcakes c
+JOIN estoque e
+ON c.id_produto = e.id_produto
+WHERE c.id_produto = $1
         `, [id]);
 
         if (result.rows.length === 0) {
@@ -187,3 +199,5 @@ app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
     console.log(`Pasta: ${__dirname}`);
 });
+
+console.log("Fim do arquivo");

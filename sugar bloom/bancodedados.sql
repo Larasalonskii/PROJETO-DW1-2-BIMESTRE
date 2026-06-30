@@ -1,72 +1,64 @@
-CREATE TABLE cupcakes ( 
-id_produto INTEGER PRIMARY KEY,
-nome VARCHAR(100) NOT NULL, 
-preco NUMERIC(10,2) NOT NULL,
-massa VARCHAR(50) NOT NULL, 
-cobertura VARCHAR(100) NOT NULL, 
-granulado BOOLEAN NOT NULL, 
-quantidade_estoque INTEGER NOT NULL );
+
+DROP TABLE IF EXISTS estoque;
+DROP TABLE IF EXISTS cupcakes;
+
+
+CREATE TABLE cupcakes (
+    id_produto INTEGER PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco NUMERIC(10,2) NOT NULL,
+    massa VARCHAR(50) NOT NULL,
+    cobertura VARCHAR(100) NOT NULL,
+    granulado BOOLEAN NOT NULL,
+    imagem VARCHAR(300)
+);
 
 INSERT INTO cupcakes
-(id_produto, nome, preco, massa, cobertura, granulado, quantidade_estoque)
+(id_produto, nome, preco, massa, cobertura, granulado, imagem)
 VALUES
-(1,  'Brigadeiro Clássico', 8.50, 'Chocolate', 'Brigadeiro', TRUE, 20),
-(2,  'Morango Vanilla', 7.00, 'Baunilha', 'Morango', FALSE, 15),
-(3,  'Red Velvet Cream', 9.50, 'Red Velvet', 'Cream Cheese', TRUE, 10),
-(4,  'Choco Branco', 8.00, 'Chocolate', 'Chocolate Branco', TRUE, 18),
-(5,  'Brigadeiro Baunilha', 7.50, 'Baunilha', 'Brigadeiro', FALSE, 22),
-(6,  'Cenoura Choco', 9.00, 'Cenoura', 'Chocolate', TRUE, 12),
-(7,  'Limão Merengado', 8.75, 'Limão', 'Merengue', FALSE, 14),
-(8,  'Red Velvet Duo', 10.00, 'Red Velvet', 'Cream Cheese', FALSE, 8),
-(9,  'Laranja Choco', 7.25, 'Laranja', 'Chocolate', TRUE, 17),
-(10, 'Nutella Supreme', 8.90, 'Chocolate', 'Nutella', TRUE, 9),
-(11, 'Doce de Leite Vanilla', 7.80, 'Baunilha', 'Doce de Leite', FALSE, 13),
-(12, 'Coco Beijinho', 9.20, 'Coco', 'Beijinho', TRUE, 11),
-(13, 'Morango Choco', 8.30, 'Chocolate', 'Morango', FALSE, 16),
-(14, 'Baunilha Branco', 7.90, 'Baunilha', 'Chocolate Branco', TRUE, 19),
-(15, 'Red Velvet Brigadeiro', 9.80, 'Red Velvet', 'Brigadeiro', TRUE, 7),
-(16, 'Cenoura Brigadeiro', 8.40, 'Cenoura', 'Brigadeiro', FALSE, 21),
-(17, 'Limão Branco', 7.60, 'Limão', 'Chocolate Branco', TRUE, 15),
-(18, 'Coco Doce', 8.70, 'Coco', 'Doce de Leite', FALSE, 10),
-(19, 'Oreo Choco', 9.10, 'Chocolate', 'Oreo', TRUE, 12),
-(20, 'Baunilha Nutella', 8.20, 'Baunilha', 'Nutella', TRUE, 14),
-(21, 'Laranja Morango', 7.70, 'Laranja', 'Morango', FALSE, 18),
-(22, 'Red Velvet Nutella', 9.40, 'Red Velvet', 'Nutella', TRUE, 6),
-(23, 'Prestígio Choco', 8.60, 'Chocolate', 'Prestígio', TRUE, 20),
-(24, 'Beijinho Vanilla', 7.30, 'Baunilha', 'Beijinho', FALSE, 23),
-(25, 'Coco Chocolate', 9.00, 'Coco', 'Chocolate', TRUE, 11),
-(26, 'Cenoura Doce Leite', 8.10, 'Cenoura', 'Doce de Leite', FALSE, 17),
-(27, 'Nutella Explosão', 10.50, 'Chocolate', 'Nutella', TRUE, 5),
-(28, 'Limão Merengue Fit', 8.80, 'Limão', 'Merengue', TRUE, 13),
-(29, 'Baunilha Brigadeiro', 7.40, 'Baunilha', 'Brigadeiro', TRUE, 24),
-(30, 'Red Velvet Oreo', 9.30, 'Red Velvet', 'Oreo', FALSE, 9),
-(31, 'KitKat Choco', 8.50, 'Chocolate', 'KitKat', TRUE, 16),
-(32, 'Coco Beijinho Light', 7.90, 'Coco', 'Beijinho', FALSE, 18),
-(33, 'Cenoura Chocolate', 8.60, 'Cenoura', 'Chocolate', TRUE, 12),
-(34, 'Ferrero Rocher Dream', 9.70, 'Chocolate', 'Ferrero Rocher', TRUE, 8),
-(35, 'Prestígio Vanilla', 8.20, 'Baunilha', 'Prestígio', FALSE, 14),
-(36, 'Limão Morango Mix', 7.80, 'Limão', 'Morango', TRUE, 19),
-(37, 'Red Velvet Branco', 9.90, 'Red Velvet', 'Chocolate Branco', TRUE, 7),
-(38, 'Doce Leite Choco', 8.40, 'Chocolate', 'Doce de Leite', FALSE, 15),
-(39, 'Laranja Brigadeiro', 7.60, 'Laranja', 'Brigadeiro', TRUE, 21),
-(40, 'Nutella Morango Duo', 10.20, 'Chocolate', 'Nutella com Morango', TRUE, 6),
-(41, 'Ovomaltine Vanilla', 8.70, 'Baunilha', 'Ovomaltine', TRUE, 15),
-(42, 'Kinder Bueno Choco', 9.10, 'Chocolate', 'Kinder Bueno', TRUE, 11),
-(43, 'Coco Prestígio Fit', 8.40, 'Coco', 'Prestígio', FALSE, 17),
-(44, 'Cenoura Branco', 7.90, 'Cenoura', 'Brigadeiro Branco', TRUE, 18),
-(45, 'Red Velvet Ninho Nutella', 9.50, 'Red Velvet', 'Nutella com Leite Ninho', TRUE, 8),
-(46, 'Baunilha Paçoca', 8.60, 'Baunilha', 'Paçoca', FALSE, 20),
-(47, 'Choco Maracujá Mousse', 9.20, 'Chocolate', 'Mousse de Maracujá', TRUE, 12),
-(48, 'Limão Leite Ninho', 8.30, 'Limão', 'Leite Ninho', TRUE, 16),
-(49, 'Laranja Doce Leite', 7.80, 'Laranja', 'Doce de Leite', FALSE, 19),
-(50, 'Kinder Chocolate Bomb', 10.00, 'Chocolate', 'Kinder Chocolate', TRUE, 7),
-(51, 'Baunilha Churros', 8.90, 'Baunilha', 'Churros', TRUE, 14),
-(52, 'Coco Branco Cream', 9.40, 'Coco', 'Chocolate Branco', FALSE, 10),
-(53, 'Cenoura Nutella Gold', 8.50, 'Cenoura', 'Nutella', TRUE, 13),
-(54, 'Red Velvet Ovomaltine', 9.80, 'Red Velvet', 'Ovomaltine', TRUE, 9),
-(55, 'Limão Brigadeiro Fresh', 7.70, 'Limão', 'Brigadeiro', FALSE, 22),
-(56, 'Choco Leite Ninho', 8.80, 'Chocolate', 'Leite Ninho', TRUE, 15),
-(57, 'Baunilha KitKat Crunch', 9.30, 'Baunilha', 'KitKat', TRUE, 11),
-(58, 'Coco Oreo Bite', 8.40, 'Coco', 'Oreo', FALSE, 17),
-(59, 'Ferrero Supreme', 10.10, 'Chocolate', 'Ferrero Rocher', TRUE, 6),
-(60, 'Red Velvet Bueno', 9.00, 'Red Velvet', 'Kinder Bueno', TRUE, 12);
+(1, 'Brigadeiro Clássico', 8.50, 'Chocolate', 'Brigadeiro', TRUE, 'brigadeiro.png'),
+(2, 'Morango Vanilla', 7.00, 'Baunilha', 'Morango', FALSE, 'morango.png'),
+(3, 'Red Velvet Cream', 9.50, 'Red Velvet', 'Cream Cheese', TRUE, 'redvelvet.png'),
+(4, 'Choco Branco', 8.00, 'Chocolate', 'Chocolate Branco', TRUE, 'chocobranco.png'),
+(5, 'Baunilha Clássico', 7.50, 'Baunilha', 'Brigadeiro', FALSE, 'baunilha.png'),
+(6, 'Cenoura Choco', 9.00, 'Cenoura', 'Chocolate', TRUE, 'Cenoura Ch.png'),
+(7, 'Limão Merengado', 8.75, 'Limão', 'Merengue', FALSE, 'Limão Merengado.png'),
+(8, 'Nutella Supreme', 8.90, 'Chocolate', 'Nutella', TRUE, 'Nutella Supreme.png'),
+(9, 'Oreo Choco', 9.10, 'Chocolate', 'Oreo', TRUE, 'Oreo Choco.png'),
+(10, 'Coco Beijinho', 9.20, 'Coco', 'Beijinho', TRUE, 'Coco Beijinho.png');
+
+
+CREATE TABLE estoque (
+    id_produto INTEGER PRIMARY KEY,
+    quantidade_estoque INTEGER NOT NULL,
+
+    FOREIGN KEY (id_produto)
+        REFERENCES cupcakes(id_produto)
+);
+
+INSERT INTO estoque
+(id_produto, quantidade_estoque)
+VALUES
+(1,20),
+(2,15),
+(3,10),
+(4,18),
+(5,22),
+(6,12),
+(7,14),
+(8,9),
+(9,12),
+(10,11);
+
+SELECT
+    c.id_produto,
+    c.nome,
+    c.preco,
+    c.massa,
+    c.cobertura,
+    c.granulado,
+    e.quantidade_estoque,
+    c.imagem
+FROM cupcakes c
+JOIN estoque e
+ON c.id_produto = e.id_produto;

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Cupcake</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <span class="header-emoji">🧁</span>
+    <h2>Sugar Bloom</h2>
+    <h3>Detalhes do cupcake</h3>
+</header>
+
+<main class="pagina-larga">
+    <div class="detalhe-card">
+
+        <div class="detalhe-img-wrap">
+            <img id="imagem" class="detalhe-img">
+        </div>
+
+        <div class="info">
+            <span class="detalhe-badge">🧁 Cupcake</span>
+            <h2 id="nome"></h2>
+            <p class="detalhe-preco"><span>R$</span> <strong id="preco"></strong></p>
+
+            <div class="detalhe-attrs">
+                <div class="detalhe-attr">
+                    <span class="attr-emoji">🍰</span>
+                    <div>
+                        <div class="attr-label">Massa</div>
+                        <div class="attr-value" id="massa"></div>
+                    </div>
+                </div>
+                <div class="detalhe-attr">
+                    <span class="attr-emoji">🍫</span>
+                    <div>
+                        <div class="attr-label">Cobertura</div>
+                        <div class="attr-value" id="cobertura"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="granulado-wrap"></div>
+
+            <div class="detalhe-estoque">
+                <div class="estoque-topo">
+                    <span>📦 Estoque</span>
+                    <span id="estoque-num"></span>
+                </div>
+                <div class="estoque-bar-bg">
+                    <div class="estoque-bar-fill" id="estoque-bar"></div>
+                </div>
+            </div>
+
+            <button class="btn-rosa detalhe-btn" onclick="history.back()">← Voltar</button>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <h3>Lara Salonski Zanoni</h3>
+</footer>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const ESTOQUE_MAX = 30;
+
+    async function carregarCupcake() {
+        try {
+            const response = await fetch(`http://localhost:3001/cupcakes/${id}`);
+            const data = await response.json();
+            const c = data.cupcake;
+
+            document.getElementById("imagem").src = `http://localhost:3001/fotos/${c.imagem}`;
+            document.getElementById("nome").textContent = c.nome;
+            document.getElementById("preco").textContent = Number(c.preco).toFixed(2);
+            document.getElementById("massa").textContent = c.massa;
+            document.getElementById("cobertura").textContent = c.cobertura;
+
+            const granWrap = document.getElementById("granulado-wrap");
+            if (c.granulado) {
+                granWrap.innerHTML = `<span class="badge-granulado">✨ Com granulado</span>`;
+            } else {
+                granWrap.innerHTML = `<span class="badge-sem-granulado">Sem granulado</span>`;
+            }
+
+            const qtd = c.quantidade_estoque;
+            document.getElementById("estoque-num").textContent = `${qtd} unidades`;
+            const pct = Math.min((qtd / ESTOQUE_MAX) * 100, 100);
+            document.getElementById("estoque-bar").style.width = pct + "%";
+
+        } catch (erro) {
+            alert("Erro ao carregar cupcake.");
+        }
+    }
+
+    carregarCupcake();
+</script>
+
+</body>
+</html>
