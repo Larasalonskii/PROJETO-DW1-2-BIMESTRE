@@ -36,13 +36,13 @@ sugar-bloom/
 │   ├── nutella.png
 │   ├── oreo.png
 │   └── coco.png
-├── index.html          -> catálogo principal
-├── detalhes.html       -> detalhes do cupcake
-├── tabela.html         -> tabela de estoque
-├── style.css           -> estilos
-├── server.js           -> servidor/api
-├── bancodedados.sql    -> banco de dados
-├── fundov2.png         -> imagem do header
+├── index.html          * catálogo principal
+├── detalhes.html       * detalhes do cupcake
+├── tabela.html         * tabela de estoque
+├── style.css           * estilos
+├── server.js           * servidor/api
+├── bancodedados.sql    * banco de dados
+├── fundov2.png         * imagem do header
 ├── .env
 ├── package.json
 └── package-lock.json
